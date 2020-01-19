@@ -11,11 +11,11 @@ description: A blog dedicated to important ideas in deep learning. Focus on intu
 github_username: Alexander-Schiendorfer
 
 # Email and twitter are optional:
-email: 
-twitter_username: 
+email: alexander.schiendorfer@gmail.com
+twitter_username: schienal
 
 # Set this to true to get LaTeX math equation support
-use_math: 
+use_math: true
 
 # Everything below here can be ignored, unless you want to change the theme entirely
 theme: jekyll-theme-minimal
