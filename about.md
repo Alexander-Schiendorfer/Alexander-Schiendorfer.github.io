@@ -2,7 +2,7 @@
 
 Hi! 
 
-I am a researcher in AI, currently employed as a PostDoc at the [University of Augsburg](http://www.isse.de).
+I am a researcher in AI, currently employed as a PostDoc at the [University of Augsburg](https://www.uni-augsburg.de/en/fakultaet/fai/isse/research/artificial-intelligence/).
 
 ![Image of the author](images/schienal.jpeg)
 
