@@ -6,6 +6,13 @@ title:  "Automatic Differentiation for Deep Learning, by example"
 ## TL;DR
 In essence, neural networks are simply mathematical functions that are composed of many simpler functions. During training, we need to find partial derivatives of each weight (or bias) to make adjustments. All partial derivatives together are called the *gradient* (vector) and boil down to real numbers for a specific input to the function. This calculation can be easily programmed using *reverse mode automatic differentiation* which powers numerical frameworks such as [TensorFlow](https://www.tensorflow.org/tutorials/customization/autodiff) or [PyTorch](https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html). Let's peek under the hood and work out a couple of concrete examples (including a small Numpy implementation) to see the magic and connect the dots!
 
+Find a jupyter notebook accompanying the post [here](https://github.com/Alexander-Schiendorfer/Alexander-Schiendorfer.github.io/blob/master/notebooks/simple-autodiff.ipynb) or directly in Colab:
+
+<table align="left">
+  <td>
+    <a target="_blank" href="https://colab.research.google.com/github/Alexander-Schiendorfer/Alexander-Schiendorfer.github.io/blob/master/notebooks/simple-autodiff.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />Run in Google Colab</a>
+  </td>
+</table>
 ## Understanding the Chain Rule 
 Neural networks calculate their output (for a given input) by repeatedly multiplying features by weights, summing them up, and applying activation functions to obtain non-linear mappings. 
 
