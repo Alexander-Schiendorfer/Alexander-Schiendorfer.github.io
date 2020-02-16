@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Making sense of LSTMs by example"
+comments: true
 ---
 # Making sense of LSTMs by example
 ## TL;DR
@@ -183,3 +184,28 @@ When reading "ate", the LSTM must have updated the cell state in such a way that
 Long short-term memory networks provide a clever arrangement of gates and connections that improve the gradient flow. The inner workings may be a bit hard to conceptualize - but fortunately we do not really have to do that, as long as our networks work well. I hope this post is useful to at least convey the idea that it *can* work.
 
 Real LSTM cells are much harder to interpret and understand. But [LSTMVis](http://lstm.seas.harvard.edu) provides a really nice tool to play around with and appreciate the complexity encoded in these networks. Give it a go!
+
+# Comments 
+{% if page.comments %} 
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = {{ page.url }};  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = {{ page.id }}; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://https-alexander-schiendorfer-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+{% endif %}
