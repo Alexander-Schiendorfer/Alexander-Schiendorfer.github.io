@@ -114,7 +114,7 @@ A single computational node (e.g., for multiplying or adding or taking the squar
 
 ![Focus on a single computational node]({{site.baseurl}}/images/backprop/compnode.gif)
 
-For now, we only care about scalar functions (i.e., a single number) as the output of our computational graph. To calculate the partial derivatives, we have to do the local chain-rule updates in the *reverse order* of the forward calculations. Every node thus gets a *gradient* attribute for its output (the red numbers). That way, we can be sure that any "upstream gradient* is calculated before we need it in downstream nodes.
+For now, we only care about scalar functions (i.e., a single number) as the output of our computational graph. To calculate the partial derivatives, we have to do the local chain-rule updates in the *reverse order* of the forward calculations. Every node thus gets a *gradient* attribute for its output (the red numbers). That way, we can be sure that any "upstream gradient" is calculated before we need it in downstream nodes.
 
 A general solution would be to calculate the graph in forward order and then perform *[topological sorting](https://en.wikipedia.org/wiki/Topological_sorting)* to find an appropriate linear ordering. Conceptually even simpler are *[gradient tapes](https://www.tensorflow.org/tutorials/customization/autodiff)*. 
 We might think of keeping a "log" like this:
@@ -393,6 +393,8 @@ This will give us all the gradients with respect to the loss function (for this 
 ![Applying reverse-mode autodiff to the loss function of a small network]({{site.baseurl}}/images/backprop/graphfornetwork_full.png)
 
 We also found gradients for the inputs that we cannot really change. It does not make sense to adapt the target $t$ to what would make the loss smaller (that's a bit cheating !?), we need to change the output $y$. Similarly, we cannot change the inputs $\vec{x}$ (except for when we explicitly look for *adversarial* inputs that fool our network). But the weight gradients reveal some interesting aspects. The weight gradients are negative. That means that the loss is likely to go down if we *increase* the weight a little bit. And that makes perfect sense: we need to get $y$ higher, closer to 1. If we increase $w_1$, that will enforce the input $2$ and if we increase $w_2$, we perform a smaller subtraction - again leaving us with a higher value for $h$ and thus $y$.
+
+{% include info.html text="The perspective of neural nets as that of multiple differentiable functions composed together is so prevalent that some people suggested to drop the term 'neural network' or even 'deep learning' in favor of differentiable programming." %}
 
 # Conclusion
 
