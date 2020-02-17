@@ -357,6 +357,43 @@ dz_dx = t.gradient(z, x)  # 108.0 (4*x^3 at x = 3)
 dy_dx = t.gradient(y, x)  # 6.0
 del t  # Drop the reference to the tape
 ```
+# Connecting dots with Neural Networks
+
+Well, we have worked through an algorithmic approach to differentiating composed functions. Essentially this saves us trouble when applying the chain rule by calculating intermediate derivatives that we need for the derivatives we actually care about.
+
+**But what does that have to do with a neural network?** 
+
+Consider a single training instance $(\vec{x}, \vec{t})$ where $\vec{x} =  [x_1, x_2, \ldots, x_m]$ and $\vec{t} = [t_1, \ldots, t_d]$. Our neural network transforms $\vec{x}$ to some output $\vec{y} = [y_1, \ldots, y_k]$ that can be compared to the target (what the network *should produce*) using its *current set of weights*. Let's make this more explicit:
+
+![Applying reverse-mode autodiff to the loss function of a small network]({{site.baseurl}}/images/backprop/graphfornetwork_forward.png)
+
+For the inputs $\vec{x} = (2,3)$, the network with its current weights $0.4$ and $-0.2$ produces a scalar output $y$ using the sigmoid activation function. It outputs $0.55$ but we would like that to be closer to $1$ (the target $t$). As loss function, the squared error measures how far we are off. We can implement this graph using a few additional `CompNode` extensions (that you can find in the [notebook](https://github.com/Alexander-Schiendorfer/Alexander-Schiendorfer.github.io/blob/master/notebooks/simple-autodiff.ipynb)). 
+
+```python
+gt = Tape()
+x1 = ConstantNode(2.,gt)
+w1 = ConstantNode(0.4,gt)
+x2 = ConstantNode(3.,gt)
+w2 = ConstantNode(-0.2,gt)
+t = ConstantNode(1.,gt)
+
+h1 = Multiply(x1, w1, gt)
+h2 = Multiply(x2, w2, gt)
+
+h = Add(h1, h2, gt)
+y = Sigmoid(h,gt)
+
+t_inv = Invert(t, gt)
+e = Add(y, t_inv, gt)
+l = Square(e, gt)
+gt.forward()
+``` 
+This will give us all the gradients with respect to the loss function (for this single training instance):
+
+![Applying reverse-mode autodiff to the loss function of a small network]({{site.baseurl}}/images/backprop/graphfornetwork_full.png)
+
+We also found gradients for the inputs that we cannot really change. It does not make sense to adapt the target $t$ to what would make the loss smaller (that's a bit cheating !?), we need to change the output $y$. Similarly, we cannot change the inputs $\vec{x}$ (except for when we explicitly look for *adversarial* inputs that fool our network). But the weight gradients reveal some interesting aspects. The weight gradients are negative. That means that the loss is likely to go down if we *increase* the weight a little bit. And that makes perfect sense: we need to get $y$ higher, closer to 1. If we increase $w_1$, that will enforce the input $2$ and if we increase $w_2$, we perform a smaller subtraction - again leaving us with a higher value for $h$ and thus $y$.
+
 # Conclusion
 
 Neural networks perform a calculation of a function composed of many simpler ones to transform an input into an output (e.g., a classification). During training, we need access to partial derivatives to perform parameter updates based on them. We can algorithmically calculate these derivatives and performed some experiments ourselves using a plain Python program. Finally, you have connected all necessary dots to proceed with *actual* implementations of automatic differentiation. Have fun!
