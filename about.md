@@ -11,7 +11,7 @@ Coming from a software engineering background (I spent much time programming in 
 
 I am convinced that algorithms are taught most efficiently (time invested vs concepts understood) *by example*. Let's work through what is actually computed. Then, dense mathematical notation becomes *much easier* to digest.
 
-In the past, I also had fun writing models for combinatorial optimization problems (think timetabling or scheduling under hard and soft constraints) in [MiniZinc](http://www.minizinc.org) and [MiniBrass](http://minibrass.isse.de).
+In the past, I also had fun writing models for combinatorial optimization problems (think timetabling or scheduling under hard and soft constraints) in [MiniZinc](http://www.minizinc.org) and [MiniBrass](http://minibrass.isse.de). Feel free to browse my [dissertation](https://opus.bibliothek.uni-augsburg.de/opus4/frontdoor/index/index/docId/49160).
 
 Cheers,
 Alexander Schiendorfer

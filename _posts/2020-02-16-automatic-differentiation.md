@@ -2,10 +2,11 @@
 layout: post
 title:  "Automatic Differentiation for Deep Learning, by example"
 comments: true
+tags: [By example]
 ---
 # Automatic Differentiation for Deep Learning, by example
 ## TL;DR
-In essence, neural networks are simply mathematical functions that are composed of many simpler functions. During training, we need to find partial derivatives of each weight (or bias) to make adjustments. All partial derivatives together are called the *gradient* (vector) and boil down to real numbers for a specific input to the function. This calculation can be easily programmed using *reverse mode automatic differentiation* which powers numerical frameworks such as [TensorFlow](https://www.tensorflow.org/tutorials/customization/autodiff) or [PyTorch](https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html). Let's peek under the hood and work out a couple of concrete examples (including a small Numpy implementation) to see the magic and connect the dots!
+In essence, neural networks are simply mathematical functions that are composed of many simpler functions. During training, we need to find partial derivatives of each weight (or bias) at a specific weight setting to make adjustments. All partial derivatives together are called the *gradient* (vector) and boil down to real numbers for a specific input to the function. This calculation can be easily programmed using *reverse mode automatic differentiation* which powers numerical frameworks such as [TensorFlow](https://www.tensorflow.org/tutorials/customization/autodiff) or [PyTorch](https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html). Let's peek under the hood and work out a couple of concrete examples (including a small Numpy implementation) to see the magic and connect the dots!
 
 Find a jupyter notebook accompanying the post [here](https://github.com/Alexander-Schiendorfer/Alexander-Schiendorfer.github.io/blob/master/notebooks/simple-autodiff.ipynb) or directly in Colab:
 
@@ -27,7 +28,18 @@ Especially in very deep networks (e.g., ResNet152 has 152 layers!), calculating 
 
 At this point of studying backpropagation, I was severely nervous about taking all those derivatives by hand ... Fortunately, this tedious procedure is a mechanical operation that we can easily [automate](https://arxiv.org/abs/1502.05767) - at least for certain concrete values of a function (as opposed to getting a nice and clean symbolic function such as "$2x$" for "$x^2$" that we do not even need for training neural networks)! 
 
-Since neural networks chain weighted several sums and activation functions together we need to revisit the chain rule (again, [3Blue1Brown](https://www.youtube.com/watch?v=YG15m2VwSjA) saves the day!). We are moving from neural networks such as $f(\vec{w}; \vec{x}) = \max ( \sum_{i = 1}^k w_i \cdot x_i, 0)$ to much simpler functions, for the moment. A very helpful picture to visualize is that of a *computational graph* as a circuit of functions with input and output values that are chained together, as proposed by [CS231n](http://cs231n.github.io/optimization-2/).
+<div class="Toast Toast--warning">
+
+   <span class="Toast-icon">{% octicon alert %}</span>
+   
+   <span class="Toast-content" >
+A major source of confusion to me was the "data type" of <i>a gradient</i> or the partial derivatives, for that matter. In my mind, the meaning of <code>df / dt</code>
+ was a 'function', as in "the function over all of its domain", perhaps in symbolic form. But here, we refer to <i>specific value of the gradient</i> at a <i>specific point</i>, i.e., a set of weights with concrete values, say <code>[0.4, 1.2]</code>. Because that's really all we need for training!
+   </span>
+</div>
+
+
+Since neural networks chain together several weighted sums and activation functions we need to revisit the chain rule (again, [3Blue1Brown](https://www.youtube.com/watch?v=YG15m2VwSjA) saves the day!). We are moving from neural networks such as $f(\vec{w}; \vec{x}) = \max ( \sum_{i = 1}^k w_i \cdot x_i, 0)$ to much simpler functions, for the moment. A very helpful picture to visualize is that of a *computational graph* as a circuit of functions with input and output values that are chained together, as proposed by [CS231n](http://cs231n.github.io/optimization-2/).
 
 ![A small function for the chain rule]({{site.baseurl}}/images/backprop/chainbasic.png)
 
@@ -331,7 +343,7 @@ Verify for yourself that this yields the same gradients! Why would you even do t
 As an exercise, try to implement the `Add` operation for simple addition. You can imagine building up an extensible autodiff framework with functions as building blocks that come with their own logic to differentiate -- that's precisely what deep learning frameworks do (among other cool things such as GPU-support, distributed execution, and pre-defined higher-level abstractions such as "layers" for neural nets)! 
 
 # But why don't TensorFlow or PyTorch look so complicated?
-Admittedly, the way we wrote down reverse-mode autodiff with a gradient tape looks very tedious and unintuitive. You have all these objects for calculations and have to chain them together the right way instead of writing arithmetic expressions such as:
+Admittedly, the way we wrote down reverse-mode autodiff with a gradient tape looks very tedious and unintuitive. You have all these objects for calculations and have to chain them together in the right way instead of writing arithmetic expressions such as:
 
 ```python 
 o = ( (x*y) * (y * z) )**2
@@ -400,28 +412,3 @@ We also found gradients for the inputs that we cannot really change. It does not
 
 Neural networks perform a calculation of a function composed of many simpler ones to transform an input into an output (e.g., a classification). During training, we need access to partial derivatives to perform parameter updates based on them. We can algorithmically calculate these derivatives and performed some experiments ourselves using a plain Python program. Finally, you have connected all necessary dots to proceed with *actual* implementations of automatic differentiation. Have fun!
 
-# Comments 
-{% if page.comments %} 
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = {{ page.url }};  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = {{ page.id }}; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://https-alexander-schiendorfer-github-io.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            
-                            
-{% endif %}

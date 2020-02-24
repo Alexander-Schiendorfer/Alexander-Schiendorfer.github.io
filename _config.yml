@@ -9,6 +9,7 @@
 title: Connecting deep dots
 description: A blog dedicated to important ideas in deep learning. Focus on intuition and examples.
 github_username: Alexander-Schiendorfer
+linkedin_username: alexander-schiendorfer
 
 # Email and twitter are optional:
 email: 
@@ -17,6 +18,12 @@ twitter_username: schienal
 # Set this to true to get LaTeX math equation support
 use_math: true
 
+# Disqus Comments
+disqus:
+    # Leave shortname blank to disable comments site-wide.
+    # Disable comments for any post by adding `comments: false` to that post's YAML Front Matter.
+    shortname: alexanderschiendorfer
+    
 # Everything below here can be ignored, unless you want to change the theme entirely
 
 #theme: jekyll-theme-minimal
