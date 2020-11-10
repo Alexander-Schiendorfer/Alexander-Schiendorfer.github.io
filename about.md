@@ -2,7 +2,7 @@
 
 Hi! 
 
-I am a researcher in AI, currently employed as a PostDoc at the [University of Augsburg](https://www.uni-augsburg.de/en/fakultaet/fai/isse/research/artificial-intelligence/).
+I am a researcher at the intersection of ML, Optimization and Manufacturing, currently employed as a PostDoc at the [University of Augsburg](https://www.uni-augsburg.de/en/fakultaet/fai/isse/research/artificial-intelligence/). I will start as a professor for AI-based optimization in car manufacturing at the [Technische Hochschule Ingolstadt](http://www.thi.de) in 2021.
 
 ![Image of the author](images/schienal.jpeg)
 

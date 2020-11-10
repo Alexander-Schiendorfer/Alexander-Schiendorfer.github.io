@@ -29,7 +29,7 @@ But first, let's make really explicit what it means for a neural network to "sto
 
 # Reading and writing into memory as operations in a neural network 
 
-For the sake of the argument, assume that our turnpike expects two coins, one euro each, in order to open. 
+For the sake of the argument, assume that our turnstile expects two coins, one euro each, in order to open. 
 
 <figure>
   <img src="{{site.baseurl}}/images/turnstile_two_states.png" alt="A turnstile and a state machine."/>
